@@ -22,7 +22,7 @@ exports.getTasks = async (req, res) => {
 exports.addTask = async (req, res) => {
   try {
     const { title, description } = req.body;
-    const [result] = await pool.query('INSERT INTO tasks (title, description, completed, createdAt) VALUES (?, ?, ?, NOW())', [title, description, false]);
+    const [result] = await pool.query('INSERT INTO tasks (title, description, completed) VALUES (?, ?, ?)', [title, description, false]);
     const [task] = await pool.query('SELECT * FROM tasks WHERE id = ?', [result.insertId]);
     res.status(201).json(task[0]);
   } catch (err) {

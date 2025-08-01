@@ -29,5 +29,5 @@ pool.getConnection()
   });
 
   app.get('/', (req, res) => {
-    res.send('Hello from Node.js + MySQL!');
+    res.send('Hello,TaskTracker is live.');
   });

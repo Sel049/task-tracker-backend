@@ -70,11 +70,13 @@ module.exports = {
         { expiresIn: '1h' }
       );
 
-      res.cookie('token', token, { 
+      res.cookie('token', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict'
+        secure: true, // Required for HTTPS
+        sameSite: 'None', // Allows cross-origin cookie (e.g. Vercel ↔ Railway)
+        maxAge: 24 * 60 * 60 * 1000 // 1 day in milliseconds
       });
+      
       
       res.json({ 
         message: 'Login successful',

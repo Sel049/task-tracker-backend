@@ -8,11 +8,23 @@ const pool = require('./config/db');
 
 const app = express();
 
-// Middleware
+// ✅ Updated CORS configuration to allow both local and deployed frontend
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://task-tracker-project-vzv50nm1x-selmans-projects-b2c3037d.vercel.app'
+];
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173', 
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true // Allow cookies to be sent
 }));
+
 app.use(express.json()); // Parse JSON bodies
 app.use(cookieParser()); // Parse cookies
 
